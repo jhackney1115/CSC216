@@ -5,13 +5,15 @@
 using namespace std;
 using namespace std::chrono;
 
-int naivePower(int base, int power);
-int unoptimizedDCPower(int base, int power);
-int optimizedDCPower(int base, int power);
+long long int naivePower(long long int base, long long int power);
+long long int unoptimizedDCPower(long long int base, 
+    long long int power);
+long long int optimizedDCPower(long long int base, 
+    long long int power);
 
 int main(){
-    int baseNum=0;
-    int powerNum=0;
+    long long int baseNum=0;
+    long long int powerNum=0;
     cout<<"input a base and a power with a space between the values:";
     cin >> baseNum >> powerNum;
 
@@ -62,7 +64,7 @@ int main(){
     return 0;
 }
 
-int naivePower(int base, int power){
+long long int naivePower(long long int base, long long int power){
     if(base==0){
         return 0;
     }
@@ -72,7 +74,8 @@ int naivePower(int base, int power){
     return base * naivePower(base, power-1);
 }
 
-int unoptimizedDCPower(int base, int power){
+long long int unoptimizedDCPower(long long int base, 
+    long long int power){
     if(base==0){
         return 0;
     }
@@ -88,14 +91,15 @@ int unoptimizedDCPower(int base, int power){
     }
 }
 
-int optimizedDCPower(int base, int power){
+long long int optimizedDCPower(long long int base,
+    long long int power){
     if(base==0){
         return 0;
     }
     if(power==0){
         return 1;
     }
-    int temp = optimizedDCPower(base, power/2);
+    long long int temp = optimizedDCPower(base, power/2);
     if(power%2==0){
         return temp * temp;
     }else{
