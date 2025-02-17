@@ -91,7 +91,7 @@ public:
         }
         current = tail->next;
     }
-
+    //There can also be an insertAfter function added as well
     void insertAt(const T& value, int position) {
         Node<T>* newNode = new Node<T>(value);
         if (!tail) {
@@ -137,6 +137,18 @@ public:
         }
         delete temp;
         current = tail ? tail->next : nullptr;
+    }
+
+    void moveTo(const T& target) {
+        if (!tail) return;
+        Node<T>* temp = tail->next;
+        do {
+            if (temp->data == target) {
+                current = temp;
+                return;
+            }
+            temp = temp->next;
+        } while (temp != tail->next);
     }
 
     int size() {
