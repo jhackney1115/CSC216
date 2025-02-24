@@ -2,5 +2,10 @@
     "cSpell.words": [
         "Gsequence",
         "Ventnor"
-    ]
+    ],
+    "files.associations": {
+        "*.h": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp"
+    }
 }
