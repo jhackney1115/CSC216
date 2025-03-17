@@ -17,15 +17,19 @@ public:
 
     BST() : root(nullptr) {}
 
+    // Copy constructor
+    BST(const BST& other) : root(copyTree(other.root)) {}
+
     ~BST() {
         destroyTree(root);
     }
 
-    void destroyTree(Node* node) {
-        if (node == nullptr) return;
-        destroyTree(node->left);
-        destroyTree(node->right);
-        delete node;      
+    BST& operator=(const BST& other) {
+        if (this != &other) {
+            destroyTree(root);
+            root = copyTree(other.root);
+        }
+        return *this;
     }
 
     void insert(int data) {
@@ -45,7 +49,33 @@ public:
         cout << endl;
     }
 
+    void preorderTraversal() {
+        preorderRecursive(root);
+        cout << endl;
+    }
+
+    void postorderTraversal() {
+        postorderRecursive(root);
+        cout << endl;
+    }
+
 private:
+
+    Node* copyTree(Node* node) {
+        if (node == nullptr) return nullptr;
+        Node* newNode = new Node(node->data);
+        newNode->left = copyTree(node->left);
+        newNode->right = copyTree(node->right);
+        return newNode;
+    }
+
+    void destroyTree(Node* node) {
+        if (node == nullptr) return;
+        destroyTree(node->left);
+        destroyTree(node->right);
+        delete node;      
+    }
+
     Node* insertRecursive(Node* node, int data) {
         if (node == nullptr) {
             return new Node(data);
@@ -122,6 +152,22 @@ private:
             inorderRecursive(node->right);
         }
     }
+
+    void preorderRecursive(Node* node) {
+        if (node != nullptr) {
+            cout << node->data << " ";
+            preorderRecursive(node->left);
+            preorderRecursive(node->right);
+        }
+    }
+
+    void postorderRecursive(Node* node) {
+        if (node != nullptr) {
+            postorderRecursive(node->left);
+            postorderRecursive(node->right);
+            cout << node->data << " ";
+        }
+    }
 };
 
 int main() {
@@ -136,6 +182,10 @@ int main() {
 
     cout << "Inorder traversal: ";
     bst.inorderTraversal();
+    cout << "Preorder traversal: ";
+    bst.preorderTraversal();
+    cout << "Postorder traversal: ";
+    bst.postorderTraversal();
 
     cout << "Search for 40: " << (bst.search(40) ? "Found" :
      "Not Found") << endl;
@@ -149,5 +199,15 @@ int main() {
     bst.remove(50);
      cout << "Inorder traversal after deleting 50: ";
     bst.inorderTraversal();
+
+    BST bstCopy = bst;
+    cout << "Copy - Inorder traversal: ";
+    bstCopy.inorderTraversal();
+
+    BST bstAssigned;
+    bstAssigned = bst;
+    cout << "Assigned - Inorder traversal: ";
+    bstAssigned.inorderTraversal();
+
     return 0;
 }

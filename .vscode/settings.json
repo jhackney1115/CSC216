@@ -1,11 +1,16 @@
 {
     "cSpell.words": [
+        "Elmt",
         "Gsequence",
         "Ventnor"
     ],
     "files.associations": {
         "*.h": "cpp",
         "iosfwd": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "array": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "span": "cpp"
     }
 }

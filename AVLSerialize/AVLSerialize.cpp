@@ -8,9 +8,9 @@ using namespace std;
 
 struct Node {
     int data;
-    int height;
     Node* left;
     Node* right;
+    int height;
     Node(int value) : data(value), left(nullptr), right(nullptr),
         height(1) {}
 };
@@ -21,10 +21,20 @@ public:
 
     AVL() : root(nullptr) {}
 
+    // Copy constructor
+    AVL(const AVL& other) : root(copyTree(other.root)) {}
+
     ~AVL() {
         destroyTree(root);
     }
-
+    
+    AVL& operator=(const AVL& other) {
+        if (this != &other) {
+            destroyTree(root);
+            root = copyTree(other.root);
+        }
+        return *this;
+    }
 
     void insert(int data) {
         root = insertRecursive(root, data);
@@ -56,6 +66,14 @@ public:
     }
 
 private:
+
+    Node* copyTree(Node* node) {
+        if (node == nullptr) return nullptr;
+        Node* newNode = new Node(node->data);
+        newNode->left = copyTree(node->left);
+        newNode->right = copyTree(node->right);
+        return newNode;
+    }
 
     void destroyTree(Node* node) {
         if (node == nullptr) return;
