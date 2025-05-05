@@ -16,7 +16,7 @@ public:
     using Node = string;
     using Weight = int;
     using Neighbor = pair<Node, Weight>;
-    using AdjacencyList = unordered_map<Node, vector<Neighbor>>;
+    using AdjacencyMap = unordered_map<Node, vector<Neighbor>>;
     using Edge = tuple<Node, Node, Weight>;
 
     // Constructor: directed or undirected graph
@@ -24,11 +24,11 @@ public:
 
     // Add an edge to the graph
     void addEdge(const Node& u, const Node& v, Weight w) {
-        adjList[u].push_back({v, w});
+        adjMap[u].push_back({v, w});
         nodes.insert(u);
         nodes.insert(v);
         if (undirected) {
-            adjList[v].push_back({u, w});
+            adjMap[v].push_back({u, w});
         }
     }
 
@@ -42,7 +42,7 @@ public:
     // Print the adjacency list
     void printGraph() const {
         cout << "Graph adjacency list:" << endl;
-        for (const auto& [node, neighbors] : adjList) {
+        for (const auto& [node, neighbors] : adjMap) {
             cout << "  " << node << "->";
             for (const auto& [neighbor, weight] : neighbors) {
                 cout << "(" << neighbor << ", " << weight << ") ";
@@ -82,8 +82,8 @@ public:
             if (currentDist > distances[currentNode]) continue;
 
             // Explore neighbors (if any)
-            if (adjList.count(currentNode)) {
-                for (const auto& [neighbor, weight] : adjList.at
+            if (adjMap.count(currentNode)) {
+                for (const auto& [neighbor, weight] : adjMap.at
                 (currentNode)) {
                     int newDist = currentDist + weight;
                     if (newDist < distances[neighbor]) {
@@ -112,7 +112,7 @@ public:
     }
 
 private:
-    AdjacencyList adjList;
+    AdjacencyMap adjMap;
     unordered_set<Node> nodes;
     bool undirected;
 };
